@@ -130,7 +130,7 @@ func UpdateFood() gin.HandlerFunc {
 		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 		var menu models.Menu
 		var food models.Food
-		foodID := c.Param("food_id")
+		foodId := c.Param("food_id")
 		if err := c.BindJSON(&menu); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -163,7 +163,7 @@ func UpdateFood() gin.HandlerFunc {
 		food.Updated_at, _ = time.Parse(time.RFC1123, time.Now().Format(time.RFC3339))
 		updateObj = append(updateObj, bson.E{"updated_at", food.Updated_at})
 		upsert := true
-		filter := bson.M{"food_id": foodID}
+		filter := bson.M{"food_id": foodId}
 		opt := options.UpdateOptions{
 			Upsert: &upsert,
 		}

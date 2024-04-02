@@ -16,6 +16,7 @@ import (
 )
 
 var orderCollection *mongo.Collection = database.OpenCollection(database.Client, "order")
+var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 func GetOrders() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -51,6 +52,7 @@ func GetOrder() gin.HandlerFunc {
 
 func CreateOrder() gin.HandlerFunc {
 	return func(c *gin.Context) {
+
 		var table models.Table
 		var order models.Order
 		if err := c.BindJSON(&order); err != nil {
